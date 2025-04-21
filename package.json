@@ -6,8 +6,8 @@
   "scripts": {
     "start": "node dist/index.js",
     "start:dev": "nodemon dist/index.js",
-    "start:tsc": "tsc-watch --outDir ./dist --onSuccess \"node .\"",
-    "build": "tsc",
+    "start:tsc": "tsc-watch --outDir dist --onSuccess \"node .\"",
+    "build": "npm run build",
     "vercel-build": "npm run build"
   },
   "keywords": [],

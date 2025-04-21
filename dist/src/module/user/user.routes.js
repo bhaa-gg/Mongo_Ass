@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.UserRoutes = void 0;
+const express_1 = require("express");
+const user_controller_1 = require("./user.controller");
+const middleware_1 = require("../../middleware");
+const user_schema_1 = require("./user.schema");
+const dotenv_1 = require("dotenv");
+(0, dotenv_1.config)();
+const UserRouter = (0, express_1.Router)();
+exports.UserRoutes = UserRouter;
+UserRouter.get("/", (0, middleware_1.errorCatcher)((0, middleware_1.validationMiddleware)(user_schema_1.getUserProfileSchema)), (0, middleware_1.errorCatcher)((0, middleware_1.verifyToken)(process.env.LOGIN_SIGNATURE)), (0, middleware_1.errorCatcher)(user_controller_1.getUserProfile));
