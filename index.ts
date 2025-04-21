@@ -11,9 +11,7 @@ import User from './Db/Models/user';
 import { register, login } from './src/module/auth/auth.controller';
 
 // Load environment variables in development
-if (process.env.NODE_ENV !== 'production') {
   config();
-}
 
 const app: Express = express();
 const port = process.env.PORT || 3000;
@@ -24,8 +22,6 @@ dbConnection().catch((err) => console.error('DB connection failed:', err));
 app.use(cors({ origin: '*', credentials: true }));
 app.use(express.json());
 
-// Root routes
-app.use(express.static('dist'));
 
 app.get('/', (req: Request, res: Response, next: NextFunction): void => {
     res.json({ message: 'Hello World!s' });
