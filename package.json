@@ -1,21 +1,40 @@
 {
-  "name": "bahaa_wafy-sun-wed-(7-10)--as6-01210031428",
+  "name": "inve",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
-  "type": "module",
+  "main": "dist/index.js",
   "scripts": {
-    "start": "node index.js",
-    "start:mon": "nodemon index.js",
-    "start:watch": "node --watch index.js"
+    "start": "node ./dist/index.js",
+    "start:dev": "nodemon ./dist/index.js",
+    "start:tsc": "tsc-watch --outDir ./dist --onSuccess \"node .\"",
+    "build": "tsc",
+    "vercel-build": "npm run build"
   },
   "keywords": [],
-  "author": "",
   "license": "ISC",
+  "type": "commonjs",
   "dependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/cors": "^2.8.17",
+    "@types/joi": "^17.2.2",
+    "@types/jsonwebtoken": "^9.0.9",
+    "@types/mongoose": "^5.11.96",
+    "@types/multer": "^1.4.12",
+    "@types/uuid": "^10.0.0",
     "bcrypt": "^5.1.1",
+    "cloudinary": "^2.6.0",
     "cors": "^2.8.5",
-    "express": "^4.19.2",
-    "mongodb": "^6.7.0"
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.13.2",
+    "multer": "^1.4.5-lts.2",
+    "tsc-watch": "^6.2.1",
+    "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.1",
+    "@types/node": "^22.14.1",
+    "typescript": "^5.8.3"
   }
 }

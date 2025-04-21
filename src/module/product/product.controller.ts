@@ -1,0 +1,56 @@
+import { NextFunction, Response } from "express"
+import { IAppRequest } from "../../Types"
+import { CloudinaryConnection, ErrorApp } from "../../utils"
+import Product from "../../../Db/Models/products"
+import Category from "../../../Db/Models/category"
+
+import { v4 as uuidv4 } from 'uuid';
+
+
+
+
+export const createProduct = async (req: IAppRequest, res: Response, next: NextFunction) => {
+    const { name, description, price, gain, stock } = req.body
+    const { categoryId } = req.params
+    const user = req.authUser
+    const image = req.file
+
+    const category = await Category.findById(categoryId)
+
+    if (!category)
+        return next(new ErrorApp("Category not found", 404))
+
+    if (!image)
+        return next(new ErrorApp("Image is required", 400))
+
+    const product = await Product.findOne({ name })
+
+    if (product) {
+        product.stock += 1;
+        await product.save()
+        return res.status(201).json({
+            message: "Product created successfully",
+            product
+        })
+    }
+    const customId: string = uuidv4().slice(0, 4);
+console.log(customId);
+
+const { secure_url, public_id } = await CloudinaryConnection().uploader.upload(image.path, {
+    folder: `products/${customId}`
+})
+console.log(public_id);
+
+    const newProduct = new Product({ name, description, price, gain, stock, categoryId, userId: user?._id, Image: { secure_url, public_id } })
+
+    await newProduct.save()
+
+
+
+
+    return res.status(201).json({
+        message: "Product created successfully",
+        product: newProduct
+    })
+}
+

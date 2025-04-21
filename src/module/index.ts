@@ -1,0 +1,4 @@
+export * from "./auth/auth.routes"
+export * from "./user/user.routes"
+export * from "./category/category.routes"
+export * from "./product/product.routes"
