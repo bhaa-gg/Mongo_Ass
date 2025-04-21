@@ -10,7 +10,6 @@ import { loginSchema, registerSchema } from './src/module/auth/auth.schema';
 import User from './Db/Models/user';
 import { register, login } from './src/module/auth/auth.controller';
 
-// Load environment variables in development
   config();
 
 const app: Express = express();
