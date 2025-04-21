@@ -21,3 +21,10 @@ export const createProductSchema = {
         categoryId: generalRules._ids.required()
     })
 }
+
+export const getUserProductSchema = {
+    headers: Joi.object({
+        token: Joi.string().required(),
+        ...generalRules.my_headers
+    }),
+}

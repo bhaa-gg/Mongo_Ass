@@ -21,7 +21,7 @@ const main = async () => {
     app.use("/category", module_1.CategoryRoutes);
     app.use("/product", module_1.ProductRoutes);
     app.use((req, res, next) => next(new utils_1.ErrorApp("Page not found", 404)));
-    app.use((err, req, res, next) => (0, utils_1.errorHandler)(err, req, res, next));
+    app.use(utils_1.errorHandler);
     app.listen(port, (err) => console.log(err ? err : `Example app listening on port ${port}!`));
 };
 exports.main = main;

@@ -34,12 +34,12 @@ export const createProduct = async (req: IAppRequest, res: Response, next: NextF
         })
     }
     const customId: string = uuidv4().slice(0, 4);
-console.log(customId);
+    console.log(customId);
 
-const { secure_url, public_id } = await CloudinaryConnection().uploader.upload(image.path, {
-    folder: `products/${customId}`
-})
-console.log(public_id);
+    const { secure_url, public_id } = await CloudinaryConnection().uploader.upload(image.path, {
+        folder: `products/${customId}`
+    })
+    console.log(public_id);
 
     const newProduct = new Product({ name, description, price, gain, stock, categoryId, userId: user?._id, Image: { secure_url, public_id } })
 
@@ -53,4 +53,18 @@ console.log(public_id);
         product: newProduct
     })
 }
+
+
+export const getUserProduct = async (req: IAppRequest, res: Response, next: NextFunction) => {
+
+    const {} = req.params;
+    const user = req.authUser;
+    const products = await Product.find({ userId: user._id })
+
+    return res.status(200).json({
+        message: "Success",
+        products
+    })
+}
+
 

@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createProduct = void 0;
+exports.getUserProduct = exports.createProduct = void 0;
 const utils_1 = require("../../utils");
 const products_1 = __importDefault(require("../../../Db/Models/products"));
 const category_1 = __importDefault(require("../../../Db/Models/category"));
@@ -41,3 +41,13 @@ const createProduct = async (req, res, next) => {
     });
 };
 exports.createProduct = createProduct;
+const getUserProduct = async (req, res, next) => {
+    const {} = req.params;
+    const user = req.authUser;
+    const products = await products_1.default.find({ userId: user._id });
+    return res.status(200).json({
+        message: "Success",
+        products
+    });
+};
+exports.getUserProduct = getUserProduct;
