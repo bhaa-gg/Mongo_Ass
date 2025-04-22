@@ -29,7 +29,7 @@ export const createProduct = async (req: IAppRequest, res: Response, next: NextF
         product.stock += 1;
         await product.save()
         return res.status(201).json({
-            message: "Product created successfully",
+            message: "Stock increment Success",
             product
         })
     }
@@ -57,10 +57,52 @@ export const createProduct = async (req: IAppRequest, res: Response, next: NextF
 
 export const getUserProduct = async (req: IAppRequest, res: Response, next: NextFunction) => {
 
-    const {} = req.params;
     const user = req.authUser;
+    const { categoryId, name, stockFrom = 1, stockTo, priceFrom = 1, priceTo, totalPriceFrom = 1, totalPriceTo } = req.query;
+    const searchParams: any = {
+        userId: user._id,
+    }
+
+
+    if (name) {
+        searchParams.name = name
+    } else {
+        if (categoryId)
+            searchParams.categoryId = categoryId
+        if (stockFrom || stockTo) {
+            searchParams.stock = {};
+            if (stockFrom) {
+                searchParams.stock.$gte = Number(stockFrom);
+            }
+            if (stockTo) {
+                searchParams.stock.$lte = Number(stockTo);
+            }
+        }
+        if (priceFrom || priceTo) {
+            searchParams.price = {};
+            if (priceFrom) {
+                searchParams.price.$gte = Number(priceFrom);
+            }
+            if (priceTo) {
+                searchParams.price.$lte = Number(priceTo);
+            }
+        }
+        if (totalPriceFrom || totalPriceTo) {
+            searchParams.totalPrice = {};
+            if (totalPriceFrom) {
+                searchParams.totalPrice.$gte = Number(totalPriceFrom);
+            }
+            if (totalPriceTo) {
+                searchParams.totalPrice.$lte = Number(totalPriceTo);
+            }
+        }
+    }
+
+    console.log(searchParams);
     
-    const products = await Product.find({ userId: user._id }).populate("categoryId")
+
+
+    const products = await Product.find(searchParams).populate("categoryId")
 
     return res.status(200).json({
         message: "Success",

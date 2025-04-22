@@ -1,7 +1,7 @@
 import { config } from 'dotenv'
 import express, { Express, NextFunction, Request, Response } from 'express'
 import { ErrorApp, errorHandler } from './src/utils'
-import { AuthRoutes, CategoryRoutes, ProductRoutes, UserRoutes } from './src/module'
+import { AuthRoutes, CategoryRoutes, ProductRoutes, UserRoutes, WorkflowsRoutes } from './src/module'
 import cors from 'cors'
 
 
@@ -18,6 +18,7 @@ export const main = async () => {
     app.use("/user", UserRoutes)
     app.use("/category", CategoryRoutes)
     app.use("/product", ProductRoutes)
+    app.use("/Workflows", WorkflowsRoutes)
 
     app.use((req: Request, res: Response, next: NextFunction): any => next(new ErrorApp("Page not found", 404)))
 

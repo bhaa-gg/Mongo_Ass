@@ -1,1 +1,10 @@
 "use strict";
+var _a;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.WorkflowsRoutes = void 0;
+const express_1 = require("express");
+const middleware_1 = require("../../middleware");
+const Workflows_schema_1 = require("./Workflows.schema");
+const workflowsRoutes = (0, express_1.Router)();
+exports.WorkflowsRoutes = workflowsRoutes;
+workflowsRoutes.post("/", (0, middleware_1.errorCatcher)((0, middleware_1.validationMiddleware)(Workflows_schema_1.createOrderSchema)), (0, middleware_1.errorCatcher)((0, middleware_1.verifyToken)((_a = process.env.LOGIN_SIGNATURE) !== null && _a !== void 0 ? _a : "")));

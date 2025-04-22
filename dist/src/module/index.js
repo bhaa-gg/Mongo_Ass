@@ -18,3 +18,4 @@ __exportStar(require("./auth/auth.routes"), exports);
 __exportStar(require("./user/user.routes"), exports);
 __exportStar(require("./category/category.routes"), exports);
 __exportStar(require("./product/product.routes"), exports);
+__exportStar(require("./Workflows/Workflows.routes"), exports);

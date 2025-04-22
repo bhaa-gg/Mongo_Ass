@@ -21,11 +21,40 @@ exports.createProductSchema = {
     }),
     params: joi_1.default.object({
         categoryId: utils_1.generalRules._ids.required()
-    })
+    }),
 };
 exports.getUserProductSchema = {
     headers: joi_1.default.object({
         token: joi_1.default.string().required(),
-        ...utils_1.generalRules.my_headers
+        ...utils_1.generalRules.my_headers,
     }).unknown(true),
+    query: joi_1.default.object({
+        categoryId: utils_1.generalRules._ids.optional(),
+        name: joi_1.default.string().optional(),
+        stockFrom: joi_1.default.number().integer().min(1).optional(),
+        stockTo: joi_1.default.number()
+            .integer()
+            .min(1)
+            .when('stockFrom', {
+            is: joi_1.default.number().exist(),
+            then: joi_1.default.number().integer().greater(joi_1.default.ref('stockFrom')).required(),
+            otherwise: joi_1.default.number().integer().min(1).optional(),
+        }),
+        priceFrom: joi_1.default.number().min(1).optional(),
+        priceTo: joi_1.default.number()
+            .min(1)
+            .when('priceFrom', {
+            is: joi_1.default.number().exist(),
+            then: joi_1.default.number().greater(joi_1.default.ref('priceFrom')).required(),
+            otherwise: joi_1.default.number().min(1).optional(),
+        }),
+        totalPriceFrom: joi_1.default.number().min(1).optional(),
+        totalPriceTo: joi_1.default.number()
+            .min(1)
+            .when('totalPriceFrom', {
+            is: joi_1.default.number().exist(),
+            then: joi_1.default.number().greater(joi_1.default.ref('totalPriceFrom')).required(),
+            otherwise: joi_1.default.number().min(1).optional(),
+        }),
+    }),
 };

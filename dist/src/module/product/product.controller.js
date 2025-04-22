@@ -23,7 +23,7 @@ const createProduct = async (req, res, next) => {
         product.stock += 1;
         await product.save();
         return res.status(201).json({
-            message: "Product created successfully",
+            message: "Stock increment Success",
             product
         });
     }
@@ -42,9 +42,47 @@ const createProduct = async (req, res, next) => {
 };
 exports.createProduct = createProduct;
 const getUserProduct = async (req, res, next) => {
-    const {} = req.params;
     const user = req.authUser;
-    const products = await products_1.default.find({ userId: user._id }).populate("categoryId");
+    const { categoryId, name, stockFrom = 1, stockTo, priceFrom = 1, priceTo, totalPriceFrom = 1, totalPriceTo } = req.query;
+    const searchParams = {
+        userId: user._id,
+    };
+    if (name) {
+        searchParams.name = name;
+    }
+    else {
+        if (categoryId)
+            searchParams.categoryId = categoryId;
+        if (stockFrom || stockTo) {
+            searchParams.stock = {};
+            if (stockFrom) {
+                searchParams.stock.$gte = Number(stockFrom);
+            }
+            if (stockTo) {
+                searchParams.stock.$lte = Number(stockTo);
+            }
+        }
+        if (priceFrom || priceTo) {
+            searchParams.price = {};
+            if (priceFrom) {
+                searchParams.price.$gte = Number(priceFrom);
+            }
+            if (priceTo) {
+                searchParams.price.$lte = Number(priceTo);
+            }
+        }
+        if (totalPriceFrom || totalPriceTo) {
+            searchParams.totalPrice = {};
+            if (totalPriceFrom) {
+                searchParams.totalPrice.$gte = Number(totalPriceFrom);
+            }
+            if (totalPriceTo) {
+                searchParams.totalPrice.$lte = Number(totalPriceTo);
+            }
+        }
+    }
+    console.log(searchParams);
+    const products = await products_1.default.find(searchParams).populate("categoryId");
     return res.status(200).json({
         message: "Success",
         products

@@ -2,8 +2,6 @@ import { Router } from "express"
 import { errorCatcher, findById, multerMiddleWare, validationMiddleware, verifyToken } from "../../middleware"
 import { createProduct, getUserProduct } from "./product.controller"
 import { createProductSchema, getUserProductSchema } from "./product.schema"
-import Category from "../../../Db/Models/category"
-import { Key } from "../../utils/enums"
 import { extensible } from "../../utils"
 
 const productRoutes = Router()
