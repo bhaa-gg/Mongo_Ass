@@ -14,10 +14,7 @@ export const loginSchema = {
         email: Joi.string().email().required(),
         password: Joi.string().min(6).required()
     }).required(),
-
-    headers: Joi.object({
-        ...generalRules.my_headers
-    }).required()
+ 
 }
 
 
@@ -30,9 +27,6 @@ export const registerSchema = {
         password: Joi.string().min(6).required(),
         rePassword: Joi.string().valid(Joi.ref('password')).required()
     }).required(),
-    headers: Joi.object({
-        ...generalRules.my_headers
-    }).required()
 }
 
 
