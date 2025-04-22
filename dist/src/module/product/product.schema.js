@@ -27,5 +27,5 @@ exports.getUserProductSchema = {
     headers: joi_1.default.object({
         token: joi_1.default.string().required(),
         ...utils_1.generalRules.my_headers
-    }),
+    }).unknown(true),
 };

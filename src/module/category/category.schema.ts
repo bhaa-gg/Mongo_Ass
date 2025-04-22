@@ -12,7 +12,7 @@ export const createCategorySchema = {
     headers: Joi.object({
         token: Joi.string().required(),
         ...generalRules.my_headers
-    })
+    }).unknown(true)
 }
 
 
@@ -20,5 +20,5 @@ export const getCategoriesSchema = {
     headers: Joi.object({
         token: Joi.string().required(),
         ...generalRules.my_headers
-    })
+    }).unknown(true)
 }

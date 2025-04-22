@@ -26,5 +26,5 @@ export const getUserProductSchema = {
     headers: Joi.object({
         token: Joi.string().required(),
         ...generalRules.my_headers
-    }),
+    }).unknown(true),
 }

@@ -16,7 +16,7 @@ productRoutes.post("/:categoryId",
     errorCatcher(createProduct)
 )
 
-productRoutes.get("/:categoryId",
+productRoutes.get("/",
     errorCatcher(validationMiddleware(getUserProductSchema)),
     errorCatcher(verifyToken(process.env.LOGIN_SIGNATURE ?? "")),
     errorCatcher(getUserProduct)

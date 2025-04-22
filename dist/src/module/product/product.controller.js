@@ -44,7 +44,7 @@ exports.createProduct = createProduct;
 const getUserProduct = async (req, res, next) => {
     const {} = req.params;
     const user = req.authUser;
-    const products = await products_1.default.find({ userId: user._id });
+    const products = await products_1.default.find({ userId: user._id }).populate("categoryId");
     return res.status(200).json({
         message: "Success",
         products

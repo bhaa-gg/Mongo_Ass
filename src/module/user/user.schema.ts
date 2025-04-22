@@ -7,5 +7,5 @@ export const getUserProfileSchema = {
     headers : Joi.object({
         token: Joi.string().required(),
         ...generalRules.my_headers
-    }).required()
+    }).required().unknown(true)
 }
