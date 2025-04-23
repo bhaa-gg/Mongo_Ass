@@ -13,4 +13,4 @@ const user_1 = __importDefault(require("../../../Db/Models/user"));
 exports.authRoutes = (0, express_1.Router)();
 exports.AuthRoutes = exports.authRoutes;
 exports.authRoutes.post("/register", (0, middleware_1.errorCatcher)((0, validation_1.validationMiddleware)(auth_schema_1.registerSchema)), (0, middleware_1.errorCatcher)((0, middleware_1.FindEmailExist)(user_1.default)), (0, middleware_1.errorCatcher)(auth_controller_1.register));
-exports.authRoutes.get("/login", (0, middleware_1.errorCatcher)((0, validation_1.validationMiddleware)(auth_schema_1.loginSchema)), (0, middleware_1.errorCatcher)(auth_controller_1.login));
+exports.authRoutes.post("/login", (0, middleware_1.errorCatcher)((0, validation_1.validationMiddleware)(auth_schema_1.loginSchema)), (0, middleware_1.errorCatcher)(auth_controller_1.login));

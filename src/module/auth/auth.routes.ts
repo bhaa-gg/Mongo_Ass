@@ -14,7 +14,7 @@ authRoutes.post("/register",
     errorCatcher(register)
 );
 
-authRoutes.get("/login",
+authRoutes.post("/login",
     errorCatcher(validationMiddleware(loginSchema)),
     errorCatcher(login)
 );
