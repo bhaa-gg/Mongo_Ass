@@ -18,7 +18,7 @@ export const main = async () => {
     app.use("/user", UserRoutes)
     app.use("/category", CategoryRoutes)
     app.use("/product", ProductRoutes)
-    app.use("/Workflows", WorkflowsRoutes)
+    app.use("/orders", WorkflowsRoutes)
 
     app.use((req: Request, res: Response, next: NextFunction): any => next(new ErrorApp("Page not found", 404)))
 

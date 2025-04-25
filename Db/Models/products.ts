@@ -19,7 +19,7 @@ interface IProduct extends Document {
 }
 
 
-const productSchema = new Schema({
+const productSchema = new Schema<IProduct>({
     userId: { type: Schema.Types.ObjectId, required: true, ref: 'User' },
     categoryId: { type: Schema.Types.ObjectId, required: true, ref: 'Category' },
     name: { type: String, required: true, trim: true, minlength: 3, maxlength: 30, unique: true },

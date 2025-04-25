@@ -6,17 +6,33 @@ import { WorkflowStatus } from "../../src/utils"
 
 interface IWorkflow extends Document {
     userId: Schema.Types.ObjectId
-    productId: Schema.Types.ObjectId
+    products: { id: Schema.Types.ObjectId, quantity: number }[]
     status: WorkflowStatus
-    amount: number
+    totalSalary: number
+    Discount: number
 }
 
 
-const workflowSchema = new Schema({
-    userId: { type: Schema.Types.ObjectId, required: true , ref: 'User' },
-    productId: { type: Schema.Types.ObjectId, required: true , ref: 'Product' },
+const workflowSchema = new Schema<IWorkflow>({
+    userId: { type: Schema.Types.ObjectId, required: true, ref: 'User' },
+    products: [
+        {
+            id: {
+                type: Schema.Types.ObjectId,
+                required: true,
+                ref: 'Product'
+            },
+            quantity: {
+                type: Number,
+                required: true,
+                min: 1
+            }
+        }
+
+    ],
     status: { type: String, required: true, enum: Object.values(WorkflowStatus) },
-    amount: { type: Number, required: true },
+    totalSalary: { type: Number, required: true },
+    Discount: { type: Number, required: false, default: 0 },
 }, { timestamps: true, autoCreate: true, versionKey: false })
 
 

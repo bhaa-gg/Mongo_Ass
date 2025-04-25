@@ -10,7 +10,7 @@ export interface ICategory extends Document {
 }
 
 
-const categorySchema = new Schema({
+const categorySchema = new Schema<ICategory>({
     userId: { type: Schema.Types.ObjectId, required: true , ref: 'User' },
     name: { type: String, required: true, trim: true, minlength: 3, maxlength: 30 , unique: true },
 
