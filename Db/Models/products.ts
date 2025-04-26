@@ -27,11 +27,11 @@ const productSchema = new Schema<IProduct>({
     Image: {
         secure_url: {
             type: String,
-            required: true,  
+            required: false,  
         },
         public_id: {
             type: String,
-            required: true,
+            required: false,
         },
     },
     price: { type: Number, required: true },

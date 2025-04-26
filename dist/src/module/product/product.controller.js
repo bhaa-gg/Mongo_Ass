@@ -18,6 +18,14 @@ const createProduct = async (req, res, next) => {
         return next(new utils_1.ErrorApp("Category not found", 404));
     const product = await products_1.default.findOne({ name });
     if (product) {
+        if (image && !product.Image.secure_url) {
+            const customId = (0, uuid_1.v4)().slice(0, 4);
+            const { secure_url, public_id } = await (0, utils_1.CloudinaryConnection)().uploader.upload(image.path, {
+                folder: `products/${customId}`
+            });
+            product.Image.secure_url = secure_url;
+            product.Image.public_id = public_id;
+        }
         product.stock += 1;
         await product.save();
         return res.status(201).json({
@@ -25,16 +33,17 @@ const createProduct = async (req, res, next) => {
             product
         });
     }
-    const theProud = { name, description, price, gain, stock, categoryId, userId: user === null || user === void 0 ? void 0 : user._id };
+    const theProud = { name, description, price, gain, stock, categoryId, userId: user === null || user === void 0 ? void 0 : user._id, Image: {} };
     if (image) {
         const customId = (0, uuid_1.v4)().slice(0, 4);
+        console.log(customId);
         const { secure_url, public_id } = await (0, utils_1.CloudinaryConnection)().uploader.upload(image.path, {
             folder: `products/${customId}`
         });
         theProud.Image.secure_url = secure_url;
         theProud.Image.public_id = public_id;
     }
-    const newProduct = new products_1.default();
+    const newProduct = new products_1.default(theProud);
     await newProduct.save();
     return res.status(201).json({
         message: "Product created successfully",

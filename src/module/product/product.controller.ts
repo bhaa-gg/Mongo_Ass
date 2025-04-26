@@ -7,8 +7,6 @@ import Category from "../../../Db/Models/category"
 import { v4 as uuidv4 } from 'uuid';
 
 
-
-
 export const createProduct = async (req: IAppRequest, res: Response, next: NextFunction) => {
     const { name, description, price, gain, stock } = req.body
     const { categoryId } = req.params
@@ -16,15 +14,19 @@ export const createProduct = async (req: IAppRequest, res: Response, next: NextF
     const image = req.file
 
     const category = await Category.findById(categoryId)
-
     if (!category)
         return next(new ErrorApp("Category not found", 404))
 
-
-
     const product = await Product.findOne({ name })
-
     if (product) {
+        if (image && !product.Image.secure_url) {
+            const customId: string = uuidv4().slice(0, 4);
+            const { secure_url, public_id }  :any = await CloudinaryConnection().uploader.upload(image.path, {
+                folder: `products/${customId}`
+            })
+            product.Image.secure_url = secure_url
+            product.Image.public_id = public_id
+        }
         product.stock += 1;
         await product.save()
         return res.status(201).json({
@@ -32,28 +34,21 @@ export const createProduct = async (req: IAppRequest, res: Response, next: NextF
             product
         })
     }
-
-
-    const theProud: any = { name, description, price, gain, stock, categoryId, userId: user?._id }
+    const theProud: any = { name, description, price, gain, stock, categoryId, userId: user?._id , Image: {} }
 
     if (image) {
         const customId: string = uuidv4().slice(0, 4);
-        const { secure_url, public_id } = await CloudinaryConnection().uploader.upload(image.path, {
+        console.log(customId );
+        const { secure_url, public_id }  :any = await CloudinaryConnection().uploader.upload(image.path, {
             folder: `products/${customId}`
         })
-
         theProud.Image.secure_url = secure_url
         theProud.Image.public_id = public_id
     }
+    
 
-
-
-    const newProduct = new Product()
-
+    const newProduct = new Product(theProud)
     await newProduct.save()
-
-
-
 
     return res.status(201).json({
         message: "Product created successfully",

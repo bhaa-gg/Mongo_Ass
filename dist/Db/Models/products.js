@@ -9,11 +9,11 @@ const productSchema = new mongoose_1.Schema({
     Image: {
         secure_url: {
             type: String,
-            required: true,
+            required: false,
         },
         public_id: {
             type: String,
-            required: true,
+            required: false,
         },
     },
     price: { type: Number, required: true },
