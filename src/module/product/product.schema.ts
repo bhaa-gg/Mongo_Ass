@@ -25,6 +25,9 @@ export const createProductSchema = {
 
 
 }
+
+
+
 export const getUserProductSchema = {
     headers: Joi.object({
       token: Joi.string().required(),
