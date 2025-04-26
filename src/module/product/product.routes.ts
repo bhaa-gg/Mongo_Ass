@@ -9,7 +9,7 @@ const productRoutes = Router()
 
 productRoutes.post("/:categoryId",
     // multerMiddleWare(extensible.img).single("image"),
-    errorCatcher(validationMiddleware(createProductSchema)),
+    // errorCatcher(validationMiddleware(createProductSchema)),
     errorCatcher(verifyToken(process.env.LOGIN_SIGNATURE ?? "")),
     errorCatcher(createProduct)
 )
