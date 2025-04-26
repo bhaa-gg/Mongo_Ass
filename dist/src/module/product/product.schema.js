@@ -9,7 +9,7 @@ const utils_1 = require("../../utils");
 exports.createProductSchema = {
     body: joi_1.default.object({
         name: joi_1.default.string().required(),
-        description: joi_1.default.string().required(),
+        description: joi_1.default.string().optional(),
         price: joi_1.default.number().required(),
         gain: joi_1.default.number().required(),
         stock: joi_1.default.number().optional(),
@@ -18,7 +18,7 @@ exports.createProductSchema = {
     headers: joi_1.default.object({
         token: joi_1.default.string().required(),
         ...utils_1.generalRules.my_headers
-    }),
+    }).unknown(true),
     params: joi_1.default.object({
         categoryId: utils_1.generalRules._ids.required()
     }),
