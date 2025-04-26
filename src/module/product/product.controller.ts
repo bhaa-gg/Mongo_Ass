@@ -20,8 +20,7 @@ export const createProduct = async (req: IAppRequest, res: Response, next: NextF
     if (!category)
         return next(new ErrorApp("Category not found", 404))
 
-    if (!image)
-        return next(new ErrorApp("Image is required", 400))
+
 
     const product = await Product.findOne({ name })
 
@@ -33,15 +32,23 @@ export const createProduct = async (req: IAppRequest, res: Response, next: NextF
             product
         })
     }
-    const customId: string = uuidv4().slice(0, 4);
-    console.log(customId);
 
-    const { secure_url, public_id } = await CloudinaryConnection().uploader.upload(image.path, {
-        folder: `products/${customId}`
-    })
-    console.log(public_id);
 
-    const newProduct = new Product({ name, description, price, gain, stock, categoryId, userId: user?._id, Image: { secure_url, public_id } })
+    const theProud: any = { name, description, price, gain, stock, categoryId, userId: user?._id }
+
+    if (image) {
+        const customId: string = uuidv4().slice(0, 4);
+        const { secure_url, public_id } = await CloudinaryConnection().uploader.upload(image.path, {
+            folder: `products/${customId}`
+        })
+
+        theProud.Image.secure_url = secure_url
+        theProud.Image.public_id = public_id
+    }
+
+
+
+    const newProduct = new Product()
 
     await newProduct.save()
 
@@ -99,7 +106,7 @@ export const getUserProduct = async (req: IAppRequest, res: Response, next: Next
     }
 
     console.log(searchParams);
-    
+
 
 
     const products = await Product.find(searchParams).populate("categoryId")

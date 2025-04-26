@@ -16,7 +16,7 @@ export const createProductSchema = {
     headers: Joi.object({
         token: Joi.string().required(),
         ...generalRules.my_headers
-    }),
+    }).unknown(true),
     params: Joi.object({
         categoryId: generalRules._ids.required()
     })
