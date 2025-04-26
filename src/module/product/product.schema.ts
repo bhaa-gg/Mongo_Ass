@@ -7,7 +7,7 @@ import { generalRules } from "../../utils";
 export const createProductSchema = {
     body: Joi.object({
         name: Joi.string().required(),
-        description: Joi.string().required(),
+        description: Joi.string().optional(),
         price: Joi.number().required(),
         gain: Joi.number().required(),
         stock: Joi.number().optional(),
