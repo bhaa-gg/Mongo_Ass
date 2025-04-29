@@ -10,7 +10,7 @@ workflowsRoutes.post("/",
     errorCatcher(verifyToken(process.env.LOGIN_SIGNATURE ?? "")),
     errorCatcher(createOrder)
 )
-workflowsRoutes.get("/",
+workflowsRoutes.post("/",
     errorCatcher(validationMiddleware(getOrderSchema)),
     errorCatcher(verifyToken(process.env.LOGIN_SIGNATURE ?? "")),
     errorCatcher(getOrders)
