@@ -9,4 +9,4 @@ const Workflows_controller_1 = require("./Workflows.controller");
 const workflowsRoutes = (0, express_1.Router)();
 exports.WorkflowsRoutes = workflowsRoutes;
 workflowsRoutes.post("/", (0, middleware_1.errorCatcher)((0, middleware_1.validationMiddleware)(Workflows_schema_1.createOrderSchema)), (0, middleware_1.errorCatcher)((0, middleware_1.verifyToken)((_a = process.env.LOGIN_SIGNATURE) !== null && _a !== void 0 ? _a : "")), (0, middleware_1.errorCatcher)(Workflows_controller_1.createOrder));
-workflowsRoutes.get("/", (0, middleware_1.errorCatcher)((0, middleware_1.validationMiddleware)(Workflows_schema_1.getOrderSchema)), (0, middleware_1.errorCatcher)((0, middleware_1.verifyToken)((_b = process.env.LOGIN_SIGNATURE) !== null && _b !== void 0 ? _b : "")), (0, middleware_1.errorCatcher)(Workflows_controller_1.getOrders));
+workflowsRoutes.post("/", (0, middleware_1.errorCatcher)((0, middleware_1.validationMiddleware)(Workflows_schema_1.getOrderSchema)), (0, middleware_1.errorCatcher)((0, middleware_1.verifyToken)((_b = process.env.LOGIN_SIGNATURE) !== null && _b !== void 0 ? _b : "")), (0, middleware_1.errorCatcher)(Workflows_controller_1.getOrders));
