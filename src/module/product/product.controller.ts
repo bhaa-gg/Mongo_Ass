@@ -58,7 +58,7 @@ export const createProduct = async (req: IAppRequest, res: Response, next: NextF
 
 
 export const getUserProduct = async (req: IAppRequest, res: Response, next: NextFunction) => {
-
+   
     const user = req.authUser;
     const { categoryId, name, stockFrom = 1, stockTo, priceFrom = 1, priceTo, totalPriceFrom = 1, totalPriceTo } = req.query;
     const searchParams: any = {
