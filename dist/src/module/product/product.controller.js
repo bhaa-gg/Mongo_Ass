@@ -17,7 +17,7 @@ const createProduct = async (req, res, next) => {
     if (!category)
         return next(new utils_1.ErrorApp("Category not found", 404));
     const product = await products_1.default.findOne({ name });
-    if (product) {
+    if (product && product.userId.toString() === user._id.toString() && product.categoryId.toString() === categoryId) {
         if (image && !product.Image.secure_url) {
             const customId = (0, uuid_1.v4)().slice(0, 4);
             const { secure_url, public_id } = await (0, utils_1.CloudinaryConnection)().uploader.upload(image.path, {
@@ -26,7 +26,9 @@ const createProduct = async (req, res, next) => {
             product.Image.secure_url = secure_url;
             product.Image.public_id = public_id;
         }
-        product.stock += 1;
+        product.stock += stock !== null && stock !== void 0 ? stock : 1;
+        product.price = price !== null && price !== void 0 ? price : product.price;
+        product.gain = gain !== null && gain !== void 0 ? gain : product.gain;
         await product.save();
         return res.status(201).json({
             message: "Stock increment Success",
